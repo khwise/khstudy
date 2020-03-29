@@ -72,5 +72,9 @@ public class JdbcConnection {
         return  result;
     }
 
+    public void selectMonthly(){
+
+    }
+
 
 }
