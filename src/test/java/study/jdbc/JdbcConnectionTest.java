@@ -3,7 +3,10 @@ package study.jdbc;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.sql.SQLException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by kh.jin on 2020. 3. 22.
@@ -44,5 +47,20 @@ public class JdbcConnectionTest {
         //assertEquals(expect, actual);
         //assertThat(true, Is.);
         assertTrue(expect < actual);
+    }
+
+    @Test
+    public void selectMember(){
+
+        String memberNm = "강";
+        conn.selectMember(memberNm);
+
+
+
+    }
+
+    @Test
+    public void insertMember() throws SQLException {
+        conn.insertMember();
     }
 }
