@@ -63,4 +63,14 @@ public class JdbcConnectionTest {
     public void insertMember() throws SQLException {
         conn.insertMember();
     }
+
+    @Test
+    public void updateMember() throws SQLException {
+        conn.updateMember();
+    }
+
+    @Test
+    public void deleteMember() throws SQLException{
+        conn.deleteMember();
+    }
 }

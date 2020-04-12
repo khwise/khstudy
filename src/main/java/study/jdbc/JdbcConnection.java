@@ -205,4 +205,120 @@ public class JdbcConnection {
         throw new SQLException();
     }
 
+    public void updateMember() throws SQLException{
+
+        StringBuilder sql1 = new StringBuilder();
+        StringBuilder sql2 = new StringBuilder();
+
+        sql1.append("update")
+                .append(" tb_member ")
+                .append(" set")
+                .append(" member_nm = ?")
+                .append(",updated_by = ?")
+                .append(",updated_at = NOW()")
+                .append(" where")
+                .append(" email = ?")
+                ;
+
+        sql2.append("update")
+                .append(" tb_account ")
+                .append(" set")
+                .append(" password = ?")
+                .append(",updated_by = ?")
+                .append(" where")
+                .append(" email = ?")
+                ;
+
+        this.connection();
+
+        try {
+            ps1 = conn.prepareStatement(sql1.toString());
+            ps2 = conn.prepareStatement(sql2.toString());
+            int idx = 0;
+            String email = "kbod100@naver.com";
+
+            ps1.setString(++idx, "박강주");
+            ps1.setInt(++idx, 3);
+            ps1.setString(++idx, email);
+
+            int updateCnt = ps1.executeUpdate();
+
+            System.out.println("updateCnt = " + updateCnt);
+
+            idx = 0;
+            ps2.setString(++idx, "password");
+            ps2.setInt(++idx, 3);
+            ps2.setString(++idx, email);
+
+            updateCnt =  ps2.executeUpdate();
+            System.out.println("updateCnt = " + updateCnt);
+
+        } catch (SQLException e) {
+            conn.rollback();
+            System.out.println(e.getSQLState());
+            e.printStackTrace();
+        } finally {
+            try {
+                ps1.close();
+                ps2.close();
+                conn.close();
+            } catch (Exception e) {
+                System.out.println("Failed resource close.");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void deleteMember() throws SQLException{
+
+        StringBuilder sql1 = new StringBuilder();
+        StringBuilder sql2 = new StringBuilder();
+
+        sql1.append("delete from")
+                .append(" tb_account ")
+                .append(" where")
+                .append(" email = ?")
+        ;
+
+        sql2.append("delete from")
+                .append(" tb_member ")
+                .append(" where")
+                .append(" email = ?")
+        ;
+
+        this.connection();
+
+        try {
+            ps1 = conn.prepareStatement(sql1.toString());
+            ps2 = conn.prepareStatement(sql2.toString());
+            int idx = 0;
+            String email = "kbod1000@gmail.com";
+
+            ps1.setString(++idx, email);
+
+            int deleteCnt = ps1.executeUpdate();
+
+            System.out.println("deleteCnt = " + deleteCnt);
+
+            idx = 0;
+            ps2.setString(++idx, email);
+
+            deleteCnt =  ps2.executeUpdate();
+            System.out.println("deleteCnt = " + deleteCnt);
+
+        } catch (SQLException e) {
+            conn.rollback();
+            System.out.println(e.getSQLState());
+            e.printStackTrace();
+        } finally {
+            try {
+                ps1.close();
+                ps2.close();
+                conn.close();
+            } catch (Exception e) {
+                System.out.println("Failed resource close.");
+                e.printStackTrace();
+            }
+        }
+    }
 }
